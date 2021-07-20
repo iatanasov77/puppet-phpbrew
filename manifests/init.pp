@@ -42,7 +42,8 @@ class phpbrew (
         
 			exec { 'Installing Development Tools package group':
 			  command 	=> $installDevToolsCommand,
-			  timeout	=> 1800,
+			  timeout	=> 3600,
+			  tries		=> 3,
 			}
 
         	$packagesRequire	= []
