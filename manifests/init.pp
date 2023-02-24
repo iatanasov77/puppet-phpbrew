@@ -16,23 +16,24 @@ class phpbrew (
   Boolean $system_wide = false,
   Array $additional_dependencies = []
 ) {
-	case $::operatingsystem {
-    	centos: {
-    		$dependencies = [
-				'curl',
-				'libxslt-devel',
-				're2c',
-				'libxml2-devel',
-				'php-cli',
-				'libmcrypt-devel',
-				'php-devel',
-				'openssl-devel',
-				'bzip2-devel',
-				'libicu-devel',
-				'readline-devel'
-			]
+  case $::operatingsystem {
+    centos: {
+        $dependencies = [
+          'curl',
+          'libxslt-devel',
+          're2c',
+          'libxml2-devel',
+          'php-cli',
+          'libmcrypt-devel',
+          'php-devel',
+          'openssl-devel',
+          'bzip2-devel',
+          'libicu-devel',
+          'readline-devel'
+        ]
     
-			if $::operatingsystemmajrelease == '8' {
+
+			if Integer( $::operatingsystemmajrelease ) >= 8 {
 				$installDevToolsCommand	= '/usr/bin/dnf -y group install "Development Tools"'
 			} elsif $::operatingsystemmajrelease == '7' {
 				$installDevToolsCommand	= '/usr/bin/yum -y groupinstall "Development Tools"'
@@ -45,6 +46,7 @@ class phpbrew (
 			  timeout	=> 3600,
 			  tries		=> 3,
 			}
+
 
         	$packagesRequire	= []
 		}
