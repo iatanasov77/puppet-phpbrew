@@ -12,9 +12,10 @@
 #  class { 'phpbrew': }
 #
 class phpbrew (
-  String $php_install_dir = '/opt/phpbrew',
-  Boolean $system_wide = false,
-  Array $additional_dependencies = []
+    String $version                 = '2.2.0',
+    String $php_install_dir         = '/opt/phpbrew',
+    Boolean $system_wide            = false,
+    Array $additional_dependencies  = []
 ) {
   case $::operatingsystem {
     centos: {
@@ -97,16 +98,28 @@ class phpbrew (
     }
    
 
+    /* ORIGINAL WAY
 	exec { 'download phpbrew':
-		command => '/usr/bin/wget -P /tmp https://raw.github.com/c9s/phpbrew/master/phpbrew',
+        command => '/usr/bin/wget -P /tmp https://raw.github.com/c9s/phpbrew/master/phpbrew',
 		creates => '/tmp/phpbrew',
 	}
-
 	file { '/usr/bin/phpbrew':
-		source  => '/tmp/phpbrew',
-		mode    => 'a+x',
-		require => Exec['download phpbrew'],
-	}
+        source  => '/tmp/phpbrew',
+        mode    => 'a+x',
+        require => Exec['download phpbrew'],
+    }
+    */
+    
+    # VankoSoft WAY
+	exec { 'download phpbrew':
+        command => "/usr/bin/wget -P /tmp https://github.com/phpbrew/phpbrew/releases/download/${version}/phpbrew.phar",
+        creates => '/tmp/phpbrew.phar',
+    }
+    file { '/usr/bin/phpbrew':
+        source  => '/tmp/phpbrew.phar',
+        mode    => 'a+x',
+        require => Exec['download phpbrew'],
+    }
 
 	exec { 'init phpbrew':
 		command     => '/usr/bin/sudo /usr/bin/phpbrew init',
