@@ -18,7 +18,8 @@ class phpbrew (
     Array $additional_dependencies  = []
 ) {
   case $::operatingsystem {
-    centos: {
+    #centos: {
+    'CentOS', 'AlmaLinux': {
         $dependencies = [
           'curl',
           'libxslt-devel',
