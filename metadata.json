@@ -1,16 +1,22 @@
 {
-  "description": "Puppet module for phpbrew.",
-  "summary": "Puppet module for phpbrew.",
-  "source": "https://github.com/phpbrew/puppet-phpbrew",
-  "version": "1.0.2",
-  "author": "Alexander Schneider",
-  "dependencies": [
-
-  ],
-  "types": [
-
-  ],
-  "project_page": "http://github.com/phpbrew/puppet-phpbrew",
-  "license": "Apache License, Version 2.0",
-  "name": "gmalex-phpbrew"
+    "description": "Puppet module for phpbrew.",
+    "summary": "Puppet module for phpbrew.",
+    "source": "https://github.com/phpbrew/puppet-phpbrew",
+    "version": "1.0.2",
+    "author": "Alexander Schneider",
+    "dependencies": [
+    
+    ],
+    "requirements": [
+        {
+            "name": "puppet",
+            "version_requirement": ">= 8.0.0 < 9.0.0"
+        }
+    ],
+    "types": [
+    
+    ],
+    "project_page": "http://github.com/phpbrew/puppet-phpbrew",
+    "license": "Apache License, Version 2.0",
+    "name": "gmalex-phpbrew"
 }

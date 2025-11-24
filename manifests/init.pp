@@ -17,8 +17,7 @@ class phpbrew (
     Boolean $system_wide            = false,
     Array $additional_dependencies  = []
 ) {
-  case $::operatingsystem {
-    #centos: {
+  case $facts['os']['name'] {
     'CentOS', 'AlmaLinux': {
         $dependencies = [
           'curl',
@@ -33,14 +32,12 @@ class phpbrew (
           'libicu-devel',
           'readline-devel'
         ]
-    
-
-			if Integer( $::operatingsystemmajrelease ) >= 8 {
+			if Integer( $facts['os']['release']['major'] ) >= 8 {
 				$installDevToolsCommand	= '/usr/bin/dnf -y group install "Development Tools"'
-			} elsif $::operatingsystemmajrelease == '7' {
+			} elsif $facts['os']['release']['major'] == '7' {
 				$installDevToolsCommand	= '/usr/bin/yum -y groupinstall "Development Tools"'
 			} else {
-		        fail("CentOS support only tested on major version 7 and 8, you are running version '${::operatingsystemmajrelease}'")
+		        fail("CentOS support only tested on major version 7 and 8, you are running version '${facts['os']['release']['major']}'")
 		    }
         
 			exec { 'Installing Development Tools package group':
@@ -91,7 +88,7 @@ class phpbrew (
 		}
 	}
 
-	if $::operatingsystem == 'debian' or $::operatingsystem == 'ubuntu' {
+	if $facts['os']['name'] == 'debian' or $facts['os']['name'] == 'ubuntu' {
 		exec { '/usr/bin/apt-get -y build-dep php5':
 			require => Exec['/usr/bin/apt-get -y update'],
 			before  => Exec['download phpbrew'],
